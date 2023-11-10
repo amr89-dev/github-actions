@@ -1,11 +1,22 @@
-name: hola-mundo
+name: Hello World
+
 on: [push]
+
 jobs:
-  hola-mundo:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: check
-        uses: actions/checkout@v3
-      - name: hola
-        run: node index.js
-      
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Run Hello World
+      run: node index.js
