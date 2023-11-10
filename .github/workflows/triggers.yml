@@ -1,0 +1,68 @@
+name: triggers
+run-name: Triggers
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened]
+    paths:
+      - "**.js"
+      - "**.md"
+      - "**.yml"
+  issues:
+    types:
+      - labeled
+  workflow_dispatch:
+    inputs:
+      lenguage_favorito:
+        description: "Lenguage favorito"
+        required: true
+        default: "JavaScript"
+        type: choice
+        options:
+          - "Python"
+          - "JavaScript"
+          - "Java"
+          - "C#"
+          - "PHP"
+      nombre:
+        description: "Nombre"
+        required: true
+        default: "Mundo"
+        type: string
+jobs:
+  hola-mundo-manual:
+    name: Hola Mundo Manual
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Definir nombre
+        run: echo "USERNAME=${{inputs.nombre}}" >> $GITHUB_ENV
+      - name: Definir lenguage favorito
+        run: echo "LENGUAGE=${{inputs.lenguage_favorito}}" >> $GITHUB_ENV
+      - name: Correr script
+        run: npm run hola-mundo
+  hola-mundo:
+    if: ${{ github.event.name != 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Definir nombre
+        run: echo "USERNAME=${{github.actor}}" >> $GITHUB_ENV
+      - name: Definir lenguage favorito
+        run: echo "LENGUAGE=${{inputs.lenguage_favorito}}" >> $GITHUB_ENV
+      - name: Correr script
+        run: npm start
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Hello World
+        run: npm start
