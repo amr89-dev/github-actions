@@ -4,6 +4,8 @@ jobs:
   hola-mundo:
     runs-on: ubuntu-latest
     steps:
+      - name: check
+        uses: actions/checkout@v3
       - name: hola
-        run: echo index.js
+        run: node index.js
       
