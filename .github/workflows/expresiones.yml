@@ -1,0 +1,28 @@
+name: expresiones
+run-name: Expresiones
+
+on:
+  workflow_dispatch:
+    inputs:
+      edad:
+        description: "Edad"
+        required: true
+        type: number
+      nombre:
+        description: "Nombre"
+        required: true
+        type: string
+        default: "juan"
+jobs:
+  mayor:
+    if: ${{ github.event.inputs.edad > 18 }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: correr script
+        run: echo "hola ${{ github.event.inputs.nombre }} eres mayor de edad"
+  menor:
+    if: ${{ github.event.inputs.edad < 18 }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: correr script
+        run: echo "hola ${{ github.event.inputs.nombre }} eres menor de edad"

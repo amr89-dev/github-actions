@@ -1,0 +1,13 @@
+name: Saludo usando variables
+on:
+  workflow_dispatch:
+env:
+  DIA_SEMANA: Lunes
+jobs:
+  saludo-variables:
+    runs-on: ubuntu-latest
+    env:
+      SALUDO: Hola
+    steps:
+      - name: Saludo
+        run: echo ${{ env.SALUDO }} ${{vars.NOMBRE}} hoy es ${{ env.DIA_SEMANA }}
